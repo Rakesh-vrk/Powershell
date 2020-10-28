@@ -16,6 +16,11 @@ New-AzResourceGroup -Name $resourceGroup -Location $location
 New-AzVM -ResourceGroupName $resourceGroup -Name $vmName -location $location `
          -Image UbuntuLTS -Credential $cred -OpenPorts 22
 
+#Inside the ubuntu
+#java -version
+#sudo apt update
+#sudo apt install openjdk-8-jdk
+
 #Stopping the VM
 Stop-AzVM -ResourceGroupName $resourceGroup -Name $vmName -Force
 
