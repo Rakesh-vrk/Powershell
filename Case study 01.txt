@@ -1,0 +1,14 @@
+Case study 01
+
+Azure Subscription maintenance
+
+requirement-01 Create resources only if there is tag. 
+               Tag could be either Production or Testing
+
+requirement-02 Users who are using subscription, can be only rookie/power user.
+               power user can have access to subscription after 8 am and  till 7 pm.
+               rookie user can have access to subscription after 10 am and  till 5 pm.
+               rookie user have to request for access daily.
+
+requirement-03 Resources with tag Testing, have to be deleted by 5 PM evening.
+               VM Resources with tag Production, have to be stopped after 7 PM evening.
