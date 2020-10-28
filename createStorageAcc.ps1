@@ -14,13 +14,17 @@ for($i=0; $i -lt 9; $i++) {
     $storageName = "storage" + $(get-random);
 
     #Creating Resource Group
-    New-AzResourceGroup -Name $resourceGroup -Location $location
+    New-AzResourceGroup -Name $resourceGroup -Location $location;
 
     #Creating storage accounts 
-    New-AzStorageAccount -ResourceGroupName $resourceGroup -AccountName $storageName `
-                        -Location $location -SkuName "Standard_LRS" -Kind StorageV2 
+    $job = New-AzStorageAccount -ResourceGroupName $resourceGroup -AccountName $storageName `
+                        -Location $location -SkuName "Standard_LRS" -Kind StorageV2 -AsJob;
+
+    Start-Sleep 2;
 
 }
+
+wait-job $job
 
 #Time when the script ended
 $endtime = [datetime]::UTCNow
