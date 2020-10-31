@@ -1,10 +1,4 @@
-﻿Write-Host "This script limits the creation of VM sizes in subscription"
-
-Connect-AzAccount
-
-Get-AzSubscription 
-
-$a = Read-Host "Enter the subscription ID that you want : "
+﻿$a = (Get-AzSubscription).Id
 
 $policyJSON = @'
   {
@@ -28,8 +22,6 @@ $policyJSON = @'
   }
 '@
 
-#$policy = New-AzPolicyDefinition -Name 'VMSizeRestriction' -DisplayName 'VM Size Restrictions by VRK' -Policy $policyJSON -Metadata '{"category":"Hardware Profile"}'
-
 $policy = New-AzPolicyDefinition -Name 'VMSizeRestriction' -DisplayName 'VM Size Restrictions by VRK' -Policy $policyJSON
 
-New-AzPolicyAssignment -Name 'VMSizeRestriction-SubscriptionbyVRK' -PolicyDefinition $policy -Scope "/subscriptions/$a"
+New-AzPolicyAssignment -Name 'VMSizeRestrictionToSubscription' -PolicyDefinition $policy -Scope "/subscriptions/$a"
