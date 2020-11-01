@@ -16,7 +16,7 @@ $databaseName = "Sampledb001"
 
 #variable for The ip address range that you want to allow to access SQL server
 $startIp = "0.0.0.0"
-$endIp = "0.0.0.0"
+$endIp = "255.255.255.255"
 
 #variable for getting info of created Resoruce group
 $resourceGroup=@();
@@ -67,7 +67,7 @@ $MonitorParameters = @{
   TimeGrain = [TimeSpan]::Parse("00:05:00")
   MetricNames = "dtu_consumption_percent"
 }
-(Get-AzMetric @MonitorParameters -DetailedOutput).MetricValues
+(Get-AzMetric @MonitorParameters -DetailedOutput).Data
 
 # Set an alert rule to automatically monitor DTU in the future
 Add-AzMetricAlertRule -ResourceGroup $resourceGroupName -Name "MySampleAlertRule" -Location $location `
