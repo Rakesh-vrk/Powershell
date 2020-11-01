@@ -1,9 +1,9 @@
 
 #If you wanted soft-delete option for a specific vault
 
-$vaultId = (Get-AzRecoveryServicesVault -VaultName "recovery-services" -ResourceGroupName 'frontend-servers-rg').id
+$vaultId = (Get-AzRecoveryServicesVault -Name "recovery-services" -ResourceGroupName 'frontend-servers-rg').id
 
-Get-AzRecoveryServicesVaultProperty -VaultId $vaultId
+(Get-AzRecoveryServicesVaultProperty -VaultId $vaultId).SoftDeleteFeatureState
 
 
 #If you wanted soft-delete option for all vault 
