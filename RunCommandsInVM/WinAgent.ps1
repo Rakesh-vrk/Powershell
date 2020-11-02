@@ -1,0 +1,1 @@
+Return $( (dir C:\windows\OEM\ | Where-Object { $_.Name -eq 'GuestAgent' } )| foreach { get-childitem C:\windows\OEM\$_ } | select Name, LastWriteTime );
