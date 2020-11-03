@@ -1,3 +1,5 @@
+#Reference https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/agent-windows
+
 Set-location 'C:\Users\trainer\Downloads'
 Invoke-WebRequest https://go.microsoft.com/fwlink/?LinkID=394789 -OutFile VmAgent.msi
 
@@ -13,15 +15,6 @@ $MSIArguments = @(
     "/L*v"
     $logFile
 )
-
-takeown /F C:\Users\trainer\Downloads\* /R /A
-icacls C:\Users\trainer\Downloads\*.* /T /grant trainer:F
-
-$File = $file.fullname
-$Account = New-Object System.Security.Principal.NTAccount("vm01\trainer")
-$FileSecurity = new-object System.Security.AccessControl.FileSecurity
-$FileSecurity.SetOwner($Account)
-[System.IO.File]::SetAccessControl($File, $FileSecurity)
 
 Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow ;
 
