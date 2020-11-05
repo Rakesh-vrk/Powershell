@@ -21,20 +21,13 @@ catch {
     }
 }
 
-$tags = @{"env"="Test"};
-
-
 $jobs = @();
 
-$rgList = Get-AzResourceGroup
-Write-Output "`nThere are total of $($rgList.count) Resource groups in subscription. Here is the list"
+$rgList = Get-AzResourceGroup | where-Object { $_.ResourceGroupName -notin 'rg-eastus' }
+Write-Output "`nThere are total of $($rgList.count) Resource groups exculding rg-eastus. Here is the list"
 $rgList | Select-Object -Property ResourceGroupName
 
-$rg = Get-AzResourceGroup -Tag $tags
-Write-Output "`nThere are total of $($rg.count) Resource groups with test tag. Here is the list"
-$rg | Select-Object -Property ResourceGroupName
-
-$rg | ForEach-Object {  
+$rgList | ForEach-Object {  
         $rgname = $_.ResourceGroupName;
         Write-Output "`n*Removing $rgname resource group"
         $job = Remove-AzResourceGroup -Name $rgname -AsJob -Force;
@@ -44,9 +37,10 @@ $rg | ForEach-Object {
     }
 
 foreach ($j in $jobs) {
-    $wait = Wait-Job $j
+    $wait = Wait-Job -Id $j.Id
     if($wait.State -eq 'Completed') {
         Write-Output "`n***Job which has Id $($j.Id) is Completed";
+        Receive-Job -Id $j.Id
     } else {
         Write-Output "`n***Job which has Id $($j.Id) is Failed";
     }
